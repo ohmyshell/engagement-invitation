@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="theme-color" content="#dfe6ea" />
+<meta name="description" content="Layal & Mohamad - Engagement Invitation, August 9, 2026, Saint George Hotel Beirut" />
+<title>Layal &amp; Mohamad · Engagement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Great+Vibes&family=Italianno&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     LAYAL & MOHAMAD · Engagement Invitation
+     Mobile-first, watercolor cool palette, 3D interactive cards
+     ============================================================ */
+  :root{
+    --navy:#485070; --teal:#405068; --petal:#c0d0d8; --leaf:#c8d0e0;
+    --accent:#90a0b8; --bud:#988898; --cream:#e0d0c8; --sage:#a8a8b0;
+    --mauve:#b8b8c0; --stem:#c0c0c8; --paper:#f5f7f8; --white:#f0f4f6;
+    --gold:#b8a890; --gold-soft:#cbbfa8; --gold-bright:#e8dcc4;
+    --ink:rgba(72,80,112,.08);
+    --shadow-card:
+      0 1px 2px rgba(72,80,112,.06),
+      0 18px 38px -14px rgba(72,80,112,.42),
+      0 44px 110px -34px rgba(72,80,112,.5),
+      inset 0 0 0 1px rgba(255,255,255,.72),
+      inset 0 0 80px rgba(192,208,216,.22);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;}
+  html,body{height:100%;width:100%;}
+  body{
+    background:
+      radial-gradient(ellipse 120% 90% at 50% 32%, #eef2f4 0%, #dfe6ea 52%, #c0cad0 100%);
+    font-family:'Cormorant Garamond',serif;color:var(--teal);
+    overflow:hidden;position:fixed;inset:0;overscroll-behavior:none;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  }
+
+  /* ---------- Loader ---------- */
+  #loader{
+    position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    background:radial-gradient(ellipse at center,#eef2f4,#c0cad0);
+    transition:opacity .8s ease, visibility .8s;
+  }
+  #loader.hide{opacity:0;visibility:hidden;}
+  .loader-ring{
+    width:54px;height:54px;border-radius:50%;
+    border:2px solid rgba(72,80,112,.15);border-top-color:var(--navy);
+    animation:spin 1s linear infinite;margin-bottom:22px;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .loader-script{font-family:'Great Vibes',cursive;font-size:38px;color:var(--navy);margin-bottom:6px;line-height:1;}
+  .loader-sub{font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--accent);}
+  .loader-progress{width:120px;height:2px;background:rgba(72,80,112,.15);border-radius:2px;margin-top:18px;overflow:hidden;}
+  .loader-progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--navy),var(--gold));transition:width .3s;}
+
+  /* ---------- Three.js scene ---------- */
+  #scene{position:fixed;inset:0;z-index:0;}
+
+  /* ---------- Card stage ---------- */
+  #stage{
+    position:fixed;inset:0;perspective:1500px;perspective-origin:50% 44%;
+    z-index:2;display:flex;align-items:center;justify-content:center;
+    padding:max(14px,env(safe-area-inset-top)) 12px max(78px,calc(70px + env(safe-area-inset-bottom)));
+  }
+  #deck{position:relative;transform-style:preserve-3d;will-change:transform;}
+
+  .card{
+    position:absolute;left:50%;top:50%;width:100%;height:100%;
+    border-radius:18px;
+    background:
+      linear-gradient(135deg, rgba(255,255,255,.7), rgba(255,255,255,0) 46%),
+      radial-gradient(circle at 50% 40%, #fcfdfe 0%, var(--paper) 66%, #e9eef1 100%);
+    box-shadow:var(--shadow-card);overflow:hidden;
+    transform-style:preserve-3d;backface-visibility:hidden;
+    transform:translate(-50%,-50%);
+    cursor:grab;user-select:none;-webkit-user-select:none;
+    transition:opacity .55s ease, filter .55s ease;
+    container-type:inline-size;container-name:card;
+  }
+  .card:active{cursor:grabbing;}
+  .card.hidden{opacity:0;filter:blur(12px);pointer-events:none;transform:translate(-50%,-50%) translateZ(-260px);}
+  .card .frame{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3;overflow:visible;}
+  .card .frame.fade .fx{animation:fadefx .9s ease forwards;}
+  @keyframes fadefx{from{opacity:0;}to{opacity:1;}}
+  .card .wash{position:absolute;inset:0;pointer-events:none;z-index:2;opacity:.55;
+    background:
+      radial-gradient(circle at 18% 22%, rgba(192,208,216,.22), transparent 38%),
+      radial-gradient(circle at 82% 78%, rgba(224,208,200,.18), transparent 40%),
+      radial-gradient(circle at 50% 92%, rgba(184,184,192,.14), transparent 46%);
+  }
+  .card .content{
+    position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+    text-align:center;z-index:5;padding:15% 10% 13%;
+  }
+  .card .corner-mark{
+    position:absolute;font-family:'Montserrat',sans-serif;
+    color:var(--accent);font-size:2.3cqw;letter-spacing:.36em;text-transform:uppercase;font-weight:500;
+    z-index:6;opacity:.72;
+  }
+  .card .corner-mark.tl{top:6%;left:9%;}
+  .card .corner-mark.br{bottom:6%;right:9%;}
+  .card .corner-mark svg{display:inline-block;vertical-align:middle;margin-right:.6em;}
+
+  .script{font-family:'Great Vibes',cursive;color:var(--navy);line-height:1;}
+  .smallcaps{font-family:'Cormorant Garamond',serif;text-transform:uppercase;letter-spacing:.42em;font-weight:500;color:var(--teal);}
+  .mont{font-family:'Montserrat',sans-serif;}
+  .gold-foil{
+    background:linear-gradient(100deg,#9a8c74 0%,#cbbfa8 26%,#e8dcc4 50%,#cbbfa8 74%,#9a8c74 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    background-size:220% auto;animation:shimmer 6.5s linear infinite;
+  }
+  @keyframes shimmer{to{background-position:220% center;}}
+
+  /* ---------- Card 1: Invitation ---------- */
+  #c-invite .content{justify-content:flex-start;padding-top:14.5%;gap:0;}
+  #c-invite .together{font-size:12.5cqw;margin-top:0;text-shadow:0 3px 16px rgba(72,80,112,.14);}
+  #c-invite .withfam{margin-top:3.2cqw;font-size:2.1cqw;letter-spacing:.34em;padding-left:.34em;font-weight:400;color:var(--teal);}
+  #c-invite .names{
+    font-family:'Italianno',cursive;font-size:14.5cqw;color:var(--navy);line-height:1.02;
+    margin-top:7.5cqw;text-shadow:0 3px 18px rgba(72,80,112,.2);
+    white-space:nowrap;letter-spacing:.01em;
+  }
+  #c-invite .amp{font-family:'Great Vibes',cursive;font-size:8.5cqw;color:var(--gold);vertical-align:.16em;margin:0 .1em;display:inline-block;transform:translateY(-.04em);}
+  #c-invite .invite{margin-top:5cqw;font-size:4.2cqw;font-style:italic;color:var(--teal);letter-spacing:.02em;line-height:1.5;max-width:84%;}
+  #c-invite .divider{width:22cqw;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);margin:4.2cqw auto;position:relative;}
+  #c-invite .divider::after{content:"";position:absolute;left:50%;top:50%;width:1.6cqw;height:1.6cqw;background:var(--gold);transform:translate(-50%,-50%) rotate(45deg);box-shadow:0 0 0 .9cqw var(--paper),0 0 10px rgba(184,168,144,.6);}
+  #c-invite .datetime{font-size:3.5cqw;color:var(--teal);line-height:1.85;letter-spacing:.04em;max-width:86%;}
+  #c-invite .datetime .em{font-style:italic;color:var(--navy);font-weight:500;}
+  #c-invite .datetime sup{font-size:.6em;}
+  #c-invite .venue{position:absolute;bottom:9.5%;left:0;right:0;text-align:center;z-index:5;padding-left:.3em;}
+  #c-invite .venue-rule{display:flex;align-items:center;justify-content:center;gap:3cqw;margin-bottom:2cqw;}
+  #c-invite .venue-rule span{display:block;width:9cqw;height:1px;background:var(--accent);}
+  #c-invite .venue-rule .dot{width:1.4cqw;height:1.4cqw;background:var(--gold);transform:rotate(45deg);box-shadow:0 0 8px rgba(184,168,144,.5);}
+  #c-invite .venue-name{font-family:'Montserrat',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.28em;font-size:2.8cqw;color:var(--navy);}
+  #c-invite .venue-sub{font-style:italic;font-size:2.6cqw;letter-spacing:.1em;color:var(--accent);margin-top:1.3cqw;text-transform:none;}
+
+  /* ---------- Card 2: Couple ---------- */
+  #c-couple .content{justify-content:flex-start;padding-top:13%;gap:0;}
+  #c-couple .head{font-family:'Great Vibes',cursive;font-size:10.5cqw;color:var(--navy);margin-bottom:1.5cqw;text-shadow:0 3px 14px rgba(72,80,112,.14);}
+  #c-couple .sub{font-family:'Montserrat',sans-serif;font-size:2.2cqw;letter-spacing:.4em;text-transform:uppercase;color:var(--accent);margin-bottom:5.5cqw;}
+  #c-couple .pair{display:flex;flex-direction:column;align-items:center;width:100%;max-width:88%;gap:0;}
+  #c-couple .person{width:100%;padding:3.4cqw 0;border-top:1px solid rgba(144,160,184,.22);display:flex;flex-direction:column;align-items:center;gap:1cqw;}
+  #c-couple .person:last-child{border-bottom:1px solid rgba(144,160,184,.22);}
+  #c-couple .pname{font-family:'Italianno',cursive;font-size:8cqw;color:var(--navy);line-height:1;}
+  #c-couple .prole{font-family:'Montserrat',sans-serif;font-size:2cqw;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);margin-top:.4cqw;}
+  #c-couple .parents{font-style:italic;font-size:2.9cqw;color:var(--teal);margin-top:.4cqw;text-align:center;line-height:1.4;}
+  #c-couple .quote{margin-top:5.5cqw;font-style:italic;font-size:3.3cqw;color:var(--teal);max-width:86%;line-height:1.5;}
+  #c-couple .quote::before,#c-couple .quote::after{content:'"';color:var(--gold);font-size:1.4em;}
+
+  /* ---------- Card 3: Details ---------- */
+  #c-details .content{justify-content:flex-start;padding-top:13%;gap:0;}
+  #c-details .head{font-family:'Great Vibes',cursive;font-size:10.5cqw;color:var(--navy);text-shadow:0 3px 14px rgba(72,80,112,.14);}
+  #c-details .sub{font-family:'Montserrat',sans-serif;font-size:2.2cqw;letter-spacing:.4em;text-transform:uppercase;color:var(--accent);margin-top:1.6cqw;}
+  #c-details .countdown{display:flex;gap:2.4cqw;margin-top:5.5cqw;justify-content:center;align-items:flex-start;}
+  #c-details .cd-unit{display:flex;flex-direction:column;align-items:center;min-width:15cqw;}
+  #c-details .cd-num{
+    font-family:'Cormorant Garamond',serif;font-weight:600;font-size:9cqw;line-height:1;
+    background:linear-gradient(180deg,#5a6488,#485070);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    transition:transform .3s cubic-bezier(.2,.8,.2,1);
+  }
+  #c-details .cd-num.pulse{transform:scale(1.12);}
+  #c-details .cd-lbl{font-family:'Montserrat',sans-serif;font-size:1.9cqw;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin-top:1.6cqw;}
+  #c-details .cd-sep{font-size:5.5cqw;color:var(--accent);align-self:flex-start;margin-top:1cqw;opacity:.5;}
+  #c-details .detail-block{margin-top:6cqw;width:100%;max-width:86%;}
+  #c-details .detail-row{display:flex;align-items:flex-start;gap:3.2cqw;padding:2.8cqw 0;border-bottom:1px solid rgba(144,160,184,.2);}
+  #c-details .detail-row:last-child{border-bottom:none;}
+  #c-details .detail-ico{
+    flex:0 0 8cqw;width:8cqw;height:8cqw;border-radius:50%;
+    background:rgba(192,208,216,.25);border:1px solid rgba(144,160,184,.3);
+    display:flex;align-items:center;justify-content:center;color:var(--navy);
+    transition:transform .3s, background .3s;
+  }
+  #c-details .detail-row:active .detail-ico{transform:scale(1.08);background:rgba(192,208,216,.4);}
+  #c-details .detail-ico svg{width:4cqw;height:4cqw;}
+  #c-details .detail-txt{flex:1;text-align:left;}
+  #c-details .detail-txt .k{font-family:'Montserrat',sans-serif;font-size:1.9cqw;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);}
+  #c-details .detail-txt .v{font-size:3.5cqw;color:var(--navy);margin-top:.8cqw;line-height:1.4;}
+  #c-details .detail-txt .v em{font-style:italic;color:var(--teal);}
+  #c-details .rsvp-btn{
+    position:absolute;bottom:9%;left:50%;transform:translateX(-50%);
+    padding:3cqw 9cqw;border-radius:999px;
+    background:linear-gradient(135deg,var(--navy),#5a6488);
+    color:#fff;font-family:'Montserrat',sans-serif;font-weight:500;
+    font-size:2.7cqw;letter-spacing:.28em;text-transform:uppercase;
+    border:none;cursor:pointer;z-index:6;
+    box-shadow:0 10px 26px -8px rgba(72,80,112,.6), inset 0 1px 0 rgba(255,255,255,.2);
+    transition:transform .25s, box-shadow .25s;
+  }
+  #c-details .rsvp-btn:active{transform:translateX(-50%) scale(.95);box-shadow:0 6px 18px -8px rgba(72,80,112,.6);}
+
+  /* ---------- Envelope ---------- */
+  #envelope{
+    position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(ellipse at center,#eef2f4,#c0cad0);
+    transition:opacity 1s ease, transform 1s ease;padding:18px;
+    perspective:1200px;
+  }
+  #envelope.hide{opacity:0;transform:scale(1.08);pointer-events:none;}
+  .envelope-inner{
+    width:min(440px,92vw);height:min(360px,80vh);
+    background:linear-gradient(135deg,#fcfdfe,var(--paper));
+    border-radius:14px;
+    box-shadow:0 30px 80px -20px rgba(72,80,112,.5), inset 0 0 0 1px rgba(255,255,255,.55);
+    position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    transform-style:preserve-3d;overflow:hidden;
+  }
+  .envelope-flap{
+    position:absolute;top:0;left:0;right:0;height:52%;
+    background:linear-gradient(180deg,#e9eef1,#f5f7f8);clip-path:polygon(0 0,100% 0,50% 100%);
+    transform-origin:top center;transition:transform 1s cubic-bezier(.6,.04,.3,1);
+    box-shadow:inset 0 -10px 18px -10px rgba(72,80,112,.25);z-index:3;
+  }
+  #envelope.open .envelope-flap{transform:rotateX(180deg);}
+  .env-deco{position:absolute;inset:0;pointer-events:none;z-index:1;opacity:.5;}
+  .envelope-inner .seal{
+    width:74px;height:74px;border-radius:50%;
+    background:radial-gradient(circle at 35% 35%, #c0ccd8, var(--navy));
+    color:#fff;display:flex;align-items:center;justify-content:center;
+    font-family:'Great Vibes',cursive;font-size:32px;
+    box-shadow:0 6px 18px rgba(72,80,112,.5), inset 0 2px 4px rgba(255,255,255,.3), 0 0 0 4px rgba(255,255,255,.15);
+    cursor:pointer;transition:transform .3s;margin-bottom:14px;z-index:2;
+    animation:sealpulse 2.4s ease-in-out infinite;
+  }
+  @keyframes sealpulse{0%,100%{box-shadow:0 6px 18px rgba(72,80,112,.5), inset 0 2px 4px rgba(255,255,255,.3), 0 0 0 4px rgba(255,255,255,.15), 0 0 0 0 rgba(184,168,144,.5);}50%{box-shadow:0 6px 18px rgba(72,80,112,.5), inset 0 2px 4px rgba(255,255,255,.3), 0 0 0 4px rgba(255,255,255,.15), 0 0 0 14px rgba(184,168,144,0);}}
+  .envelope-inner .seal:hover,.envelope-inner .seal:active{transform:scale(1.08) rotate(6deg);}
+  .envelope-inner .open-label{font-family:'Montserrat',sans-serif;font-style:italic;color:var(--teal);font-size:13px;letter-spacing:.24em;text-transform:uppercase;z-index:2;}
+  .envelope-inner .names-mini{font-family:'Italianno',cursive;font-size:44px;color:var(--navy);margin-bottom:4px;z-index:2;}
+  .envelope-inner .tiny{font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--accent);margin-bottom:22px;z-index:2;}
+
+  /* ---------- Music toggle ---------- */
+  #music{
+    position:fixed;top:calc(12px + env(safe-area-inset-top));right:12px;z-index:60;
+    width:44px;height:44px;border-radius:50%;border:1px solid rgba(72,80,112,.22);
+    background:rgba(245,247,248,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--navy);transition:transform .3s;
+  }
+  #music:active{transform:scale(.92);}
+  #music svg{width:20px;height:20px;}
+  #music .eq{display:none;align-items:flex-end;height:18px;}
+  #music.playing .eq{display:flex;}
+  #music.playing .icon{display:none;}
+  #music .eq span{display:block;width:3px;height:18px;margin:0 1.5px;background:var(--navy);transform-origin:bottom;animation:eq .9s infinite ease-in-out;border-radius:2px;}
+  #music .eq span:nth-child(2){animation-delay:.15s;}
+  #music .eq span:nth-child(3){animation-delay:.3s;}
+  #music .eq span:nth-child(4){animation-delay:.08s;}
+  @keyframes eq{0%,100%{transform:scaleY(.25)}50%{transform:scaleY(1)}}
+
+  /* ---------- Nav dots + arrows ---------- */
+  #nav{
+    position:fixed;bottom:calc(14px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);
+    z-index:40;display:flex;gap:9px;align-items:center;
+    background:rgba(245,247,248,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    padding:8px 14px;border-radius:999px;border:1px solid rgba(144,160,184,.25);
+  }
+  #nav .dot{width:7px;height:7px;border-radius:50%;background:rgba(144,160,184,.4);transition:all .3s;cursor:pointer;border:none;padding:0;}
+  #nav .dot.active{background:var(--navy);transform:scale(1.4);}
+  .nav-arrow{
+    position:fixed;top:50%;transform:translateY(-50%);z-index:40;
+    width:40px;height:40px;border-radius:50%;
+    background:rgba(245,247,248,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    border:1px solid rgba(144,160,184,.25);
+    display:flex;align-items:center;justify-content:center;color:var(--navy);cursor:pointer;
+    transition:transform .2s, opacity .3s;
+  }
+  .nav-arrow:active{transform:translateY(-50%) scale(.9);}
+  .nav-arrow.hidden{opacity:0;pointer-events:none;}
+  .nav-arrow svg{width:18px;height:18px;}
+  #nav-prev{left:10px;}
+  #nav-next{right:10px;}
+  .hint{
+    position:fixed;bottom:calc(54px + env(safe-area-inset-bottom));left:0;right:0;
+    text-align:center;z-index:5;font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:.28em;text-transform:uppercase;
+    color:rgba(64,80,104,.5);pointer-events:none;animation:hintpulse 3s ease-in-out infinite;
+  }
+  @keyframes hintpulse{0%,100%{opacity:.5;}50%{opacity:.85;}}
+  canvas{display:block;}
+
+  /* ---------- RSVP modal ---------- */
+  #rsvp{
+    position:fixed;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;
+    background:rgba(72,80,112,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    opacity:0;pointer-events:none;transition:opacity .35s;padding:20px;
+  }
+  #rsvp.show{opacity:1;pointer-events:auto;}
+  #rsvp .panel{
+    width:min(380px,92vw);background:linear-gradient(135deg,#fcfdfe,var(--paper));
+    border-radius:16px;padding:32px 26px 26px;text-align:center;position:relative;
+    box-shadow:0 30px 80px -20px rgba(72,80,112,.6), inset 0 0 0 1px rgba(255,255,255,.5);
+    transform:translateY(20px) scale(.96);transition:transform .4s cubic-bezier(.2,.8,.2,1);
+  }
+  #rsvp.show .panel{transform:none;}
+  #rsvp .panel h3{font-family:'Great Vibes',cursive;font-size:34px;color:var(--navy);margin-bottom:4px;}
+  #rsvp .panel p{font-size:13px;color:var(--teal);font-style:italic;margin-bottom:20px;}
+  #rsvp .panel .field{margin-bottom:14px;text-align:left;}
+  #rsvp .panel label{display:block;font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;}
+  #rsvp .panel input{width:100%;padding:11px 14px;border:1px solid rgba(144,160,184,.35);border-radius:8px;font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--navy);background:rgba(255,255,255,.6);}
+  #rsvp .panel input:focus{outline:none;border-color:var(--navy);}
+  #rsvp .panel .opts{display:flex;gap:10px;margin:18px 0;}
+  #rsvp .panel .opt{flex:1;padding:11px;border:1px solid rgba(144,160,184,.35);border-radius:8px;font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);cursor:pointer;background:rgba(255,255,255,.5);transition:all .2s;}
+  #rsvp .panel .opt.sel{background:var(--navy);color:#fff;border-color:var(--navy);}
+  #rsvp .panel .submit{width:100%;padding:13px;border-radius:999px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--navy),#5a6488);color:#fff;font-family:'Montserrat',sans-serif;font-weight:500;font-size:12px;letter-spacing:.28em;text-transform:uppercase;box-shadow:0 10px 26px -8px rgba(72,80,112,.6);}
+  #rsvp .panel .close{position:absolute;top:10px;right:14px;font-size:24px;color:var(--accent);cursor:pointer;background:none;border:none;line-height:1;}
+
+  /* ---------- Toast (success message) ---------- */
+  #toast{
+    position:fixed;top:calc(70px + env(safe-area-inset-top));left:50%;transform:translateX(-50%) translateY(-20px);
+    z-index:80;background:rgba(72,80,112,.92);color:#fff;padding:12px 22px;border-radius:999px;
+    font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    box-shadow:0 14px 30px -10px rgba(72,80,112,.5);opacity:0;pointer-events:none;
+    transition:opacity .4s, transform .4s cubic-bezier(.2,.8,.2,1);max-width:90vw;text-align:center;
+  }
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  /* ---------- Card transitions ---------- */
+  .card.enter{animation:cardIn .75s cubic-bezier(.2,.8,.2,1) both;}
+  @keyframes cardIn{from{opacity:0;transform:translate(-50%,-50%) translateZ(-240px) rotateY(22deg) rotateX(6deg);}to{opacity:1;transform:translate(-50%,-50%) translateZ(0) rotateY(0) rotateX(0);}}
+  .card.exit-left{animation:cardOutL .45s cubic-bezier(.4,0,.6,1) both;}
+  .card.exit-right{animation:cardOutR .45s cubic-bezier(.4,0,.6,1) both;}
+  @keyframes cardOutL{to{opacity:0;transform:translate(-50%,-50%) translateZ(-220px) rotateY(-32deg);}}
+  @keyframes cardOutR{to{opacity:0;transform:translate(-50%,-50%) translateZ(-220px) rotateY(32deg);}}
+
+  /* ---------- Sparkles ---------- */
+  .sparkle{position:absolute;pointer-events:none;z-index:4;width:6px;height:6px;border-radius:50%;background:radial-gradient(circle,#fff,var(--gold) 60%,transparent 70%);opacity:0;}
+  .sparkle.live{animation:tw 2.4s ease-in-out infinite;}
+  @keyframes tw{0%,100%{opacity:0;transform:scale(.4);}50%{opacity:.9;transform:scale(1.2);}}
+
+  /* ---------- Responsive refinements ---------- */
+  @media (min-width:680px){
+    .hint{bottom:calc(60px + env(safe-area-inset-bottom));}
+  }
+  @media (min-height:740px){
+    #c-invite .content{padding-top:15%;}
+  }
+  @media (max-height:640px){
+    .card .content{padding:11% 9% 11%;}
+    #c-invite .together{font-size:11cqw;}
+    #c-invite .names{font-size:13cqw;margin-top:6cqw;}
+    #c-couple .head,#c-details .head{font-size:9.5cqw;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:.01ms !important;transition-duration:.01ms !important;}
+  }
+</style>
+</head>
+<body>
+  <div id="loader">
+    <div class="loader-ring"></div>
+    <div class="loader-script">Layal &amp; Mohamad</div>
+    <div class="loader-sub">preparing your invitation</div>
+    <div class="loader-progress"><i id="loader-bar"></i></div>
+  </div>
+
+  <div id="scene"></div>
+
+  <div id="music" title="Toggle music" aria-label="Toggle music">
+    <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
+    <div class="eq"><span></span><span></span><span></span><span></span></div>
+  </div>
+
+  <div id="envelope">
+    <div class="envelope-inner">
+      <svg class="env-deco" viewBox="0 0 440 360" preserveAspectRatio="xMidYMid meet"></svg>
+      <div class="envelope-flap"></div>
+      <div class="tiny">you're invited</div>
+      <div class="names-mini">Layal &amp; Mohamad</div>
+      <div class="seal" id="seal">L</div>
+      <div class="open-label">tap to open</div>
+    </div>
+  </div>
+
+  <div id="stage">
+    <div id="deck">
+      <!-- Card 1: Invitation -->
+      <div class="card" id="c-invite">
+        <svg class="frame" viewBox="0 0 560 780" preserveAspectRatio="xMidYMid meet"></svg>
+        <div class="wash"></div>
+        <span class="corner-mark tl">invitation</span>
+        <span class="corner-mark br">no. 001</span>
+        <div class="content">
+          <div class="script together">together</div>
+          <div class="withfam smallcaps">with their families</div>
+          <div class="names">Layal<span class="amp">&amp;</span>Mohamad</div>
+          <div class="invite">invite you to celebrate their engagement</div>
+          <div class="divider"></div>
+          <div class="datetime">
+            <span class="em">Sunday</span>, the 9<sup>th</sup> of August, 2026<br/>
+            at 8 o'clock in the evening
+          </div>
+        </div>
+        <div class="venue">
+          <div class="venue-rule"><span></span><i class="dot"></i><span></span></div>
+          <div class="venue-name">Saint George Hotel</div>
+          <div class="venue-sub">Beirut &middot; Lebanon</div>
+        </div>
+      </div>
+
+      <!-- Card 2: The Couple -->
+      <div class="card hidden" id="c-couple">
+        <svg class="frame" viewBox="0 0 560 780" preserveAspectRatio="xMidYMid meet"></svg>
+        <div class="wash"></div>
+        <span class="corner-mark tl">the couple</span>
+        <span class="corner-mark br">est. 2026</span>
+        <div class="content">
+          <div class="head">two hearts</div>
+          <div class="sub">one journey begins</div>
+          <div class="pair">
+            <div class="person">
+              <div class="pname">Layal</div>
+              <div class="prole">the bride</div>
+              <div class="parents">daughter of beloved parents</div>
+            </div>
+            <div class="person">
+              <div class="pname">Mohamad</div>
+              <div class="prole">the groom</div>
+              <div class="parents">son of beloved parents</div>
+            </div>
+          </div>
+          <div class="quote">Love is the bridge between two hearts</div>
+        </div>
+      </div>
+
+      <!-- Card 3: Details & RSVP -->
+      <div class="card hidden" id="c-details">
+        <svg class="frame" viewBox="0 0 560 780" preserveAspectRatio="xMidYMid meet"></svg>
+        <div class="wash"></div>
+        <span class="corner-mark tl">the details</span>
+        <span class="corner-mark br">rsvp</span>
+        <div class="content">
+          <div class="head gold-foil">counting down</div>
+          <div class="sub">to the big day</div>
+          <div class="countdown" id="countdown">
+            <div class="cd-unit"><div class="cd-num" id="cd-d">0</div><div class="cd-lbl">days</div></div>
+            <div class="cd-sep">&middot;</div>
+            <div class="cd-unit"><div class="cd-num" id="cd-h">00</div><div class="cd-lbl">hrs</div></div>
+            <div class="cd-sep">&middot;</div>
+            <div class="cd-unit"><div class="cd-num" id="cd-m">00</div><div class="cd-lbl">min</div></div>
+            <div class="cd-sep">&middot;</div>
+            <div class="cd-unit"><div class="cd-num" id="cd-s">00</div><div class="cd-lbl">sec</div></div>
+          </div>
+          <div class="detail-block">
+            <div class="detail-row">
+              <div class="detail-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+              <div class="detail-txt"><div class="k">the date</div><div class="v"><em>Sunday</em>, 9 August 2026</div></div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+              <div class="detail-txt"><div class="k">the time</div><div class="v">8 o'clock in the evening</div></div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+              <div class="detail-txt"><div class="k">the venue</div><div class="v">Saint George Hotel<br/><em>Beirut, Lebanon</em></div></div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/><path d="m2 7 10 6 10-6"/></svg></div>
+              <div class="detail-txt"><div class="k">rsvp by</div><div class="v">15 July 2026</div></div>
+            </div>
+          </div>
+        </div>
+        <button class="rsvp-btn" id="rsvp-open">RSVP</button>
+      </div>
+    </div>
+  </div>
+
+  <button class="nav-arrow hidden" id="nav-prev" aria-label="previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+  <button class="nav-arrow" id="nav-next" aria-label="next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+  <div id="nav"><button class="dot active" aria-label="invitation"></button><button class="dot" aria-label="couple"></button><button class="dot" aria-label="details"></button></div>
+  <div class="hint">swipe or tap arrows &middot; drag to tilt</div>
+
+  <div id="rsvp">
+    <div class="panel">
+      <button class="close" id="rsvp-close">&times;</button>
+      <h3>Kindly Reply</h3>
+      <p>we'd love to celebrate with you</p>
+      <div class="field"><label>full name</label><input id="rsvp-name" type="text" placeholder="Your name" /></div>
+      <div class="opts">
+        <button class="opt sel" data-v="yes">will attend</button>
+        <button class="opt" data-v="no">unable</button>
+      </div>
+      <button class="submit" id="rsvp-submit">Send Reply</button>
+    </div>
+  </div>
+
+  <div id="toast">Thank you! Your reply has been noted.</div>
+
+  <script type="importmap">
+  { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+  </script>
+  <script type="module">
+  import * as THREE from 'three';
+
+  /* ============================================================
+     PALETTE + helpers
+     ============================================================ */
+  const P={navy:'#485070',teal:'#405068',petal:'#c0d0d8',leaf:'#c8d0e0',accent:'#90a0b8',bud:'#988898',cream:'#e0d0c8',sage:'#a8a8b0',mauve:'#b8b8c0',stem:'#c0c0c8',white:'#f0f4f6',gold:'#b8a890'};
+  const rnd=(a,b)=>a+Math.random()*(b-a);
+  const pick=a=>a[Math.floor(Math.random()*a.length)];
+  const rand=(a,b)=>a+Math.random()*(b-a);
+
+  /* ============================================================
+     BOTANICAL WATERCOLOR FRAME (SVG, procedurally generated)
+     ============================================================ */
+  const leaf=(x,y,len,ang,color,op=0.85)=>{const w=len*0.42;return `<path d="M0 0 C ${w} -${len*0.35}, ${w} -${len*0.8}, 0 -${len} C -${w} -${len*0.8}, -${w} -${len*0.35}, 0 0 Z" fill="${color}" opacity="${op}" transform="translate(${x} ${y}) rotate(${ang})"/>`;};
+  const flower=(x,y,r,pc,cc,n=6,op=0.85)=>{let s='';for(let k=0;k<n;k++){const a=(k/n)*Math.PI*2;const px=Math.cos(a)*r*0.78,py=Math.sin(a)*r*0.78;s+=`<ellipse cx="${px}" cy="${py}" rx="${r*0.62}" ry="${r*0.40}" fill="${pc}" opacity="${op}" transform="rotate(${a*180/Math.PI} ${px} ${py})"/>`;}s+=`<circle r="${r*0.30}" fill="${cc}" opacity="0.9"/>`;return `<g transform="translate(${x} ${y})">${s}</g>`;};
+  const daisy=(x,y,r,color,op=0.9)=>{let s='';for(let k=0;k<5;k++){const a=(k/5)*Math.PI*2;const px=Math.cos(a)*r*0.7,py=Math.sin(a)*r*0.7;s+=`<ellipse cx="${px}" cy="${py}" rx="${r*0.5}" ry="${r*0.3}" fill="${color}" opacity="${op}" transform="rotate(${a*180/Math.PI} ${px} ${py})"/>`;}s+=`<circle r="${r*0.22}" fill="${P.accent}" opacity="0.85"/>`;return `<g transform="translate(${x} ${y})">${s}</g>`;};
+  const bud=(x,y,r,color=P.bud)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${color}" opacity="0.8"/>`;
+  const curve=(c1,c2,end,sw=1.3,op=0.5)=>`<path d="M 0 0 C ${c1[0]} ${c1[1]}, ${c2[0]} ${c2[1]}, ${end[0]} ${end[1]}" fill="none" stroke="${P.stem}" stroke-width="${sw}" opacity="${op}" stroke-linecap="round"/>`;
+  const cluster=(x,y,r,color=P.petal)=>{let s='';for(let i=0;i<6;i++){const a=(i/6)*Math.PI*2;s+=`<circle cx="${Math.cos(a)*r*0.45}" cy="${Math.sin(a)*r*0.45}" r="${r*0.4}" fill="${color}" opacity="0.78"/>`;}s+=`<circle r="${r*0.28}" fill="${P.accent}" opacity="0.85"/>`;return `<g transform="translate(${x} ${y})">${s}</g>`;};
+
+  function cornerWreath(cx,cy,dx,dy,scale=1){
+    const g=[];const T=`translate(${cx} ${cy}) scale(${dx*scale} ${dy*scale})`;
+    g.push(curve([60,-30],[120,-90],[175,-60],1.6,0.5));
+    g.push(curve([40,40],[90,90],[155,70],1.4,0.45));
+    g.push(curve([20,-20],[40,-50],[60,-30],1.2,0.5));
+    const lc=[P.leaf,P.sage,P.mauve,P.leaf];
+    for(let i=0;i<9;i++){const t=i/8;const lx=20+t*145,ly=-15-t*60+rnd(-8,8);const ang=rnd(-30,40)+(t<0.5?0:180);g.push(leaf(lx,ly,rnd(16,27),ang,pick(lc),0.8));}
+    for(let i=0;i<6;i++){const t=i/5;const lx=20+t*125,ly=20+t*55+rnd(-8,8);const ang=rnd(-20,40)+180;g.push(leaf(lx,ly,rnd(14,22),ang,pick(lc),0.78));}
+    g.push(flower(45,-30,17,P.petal,P.accent,6,0.85));
+    g.push(flower(100,-58,13,P.cream,P.bud,6,0.85));
+    g.push(flower(145,-42,11,P.petal,P.accent,6,0.8));
+    g.push(flower(75,42,12,P.cream,P.bud,5,0.8));
+    g.push(flower(128,58,10,P.petal,P.accent,6,0.78));
+    g.push(daisy(165,-22,7,P.white,0.9));
+    g.push(daisy(55,62,6,P.white,0.9));
+    g.push(daisy(115,-22,5,P.cream,0.85));
+    g.push(cluster(160,-50,5,P.petal));
+    g.push(bud(30,-62,5),bud(85,-82,4),bud(155,18,4),bud(108,72,4.5));
+    for(let i=0;i<5;i++)g.push(`<circle cx="${20+i*18+rnd(-4,4)}" cy="${-45+rnd(-6,6)}" r="2.5" fill="${P.petal}" opacity="0.85"/>`);
+    for(let i=0;i<6;i++)g.push(`<circle cx="${rnd(20,170)}" cy="${rnd(-70,70)}" r="1.4" fill="${P.gold}" opacity="0.7"/>`);
+    return `<g transform="${T}">${g.join('')}</g>`;
+  }
+  function sideAccent(x,y,dx,scale=1,ang=0){
+    const g=[];const T=`translate(${x} ${y}) scale(${dx*scale} ${scale}) rotate(${ang})`;
+    g.push(curve([10,-40],[20,-90],[30,-135],1.2,0.5));
+    const lc=[P.leaf,P.sage,P.mauve];
+    for(let i=0;i<5;i++)g.push(leaf(rnd(5,25),-i*34+rnd(-6,6),rnd(12,18),rnd(-40,40)+(i%2?180:0),pick(lc),0.78));
+    g.push(flower(15,-62,12,P.petal,P.accent,6,0.82));
+    g.push(flower(28,-115,10,P.cream,P.bud,5,0.8));
+    g.push(daisy(8,-105,6,P.white,0.9));
+    g.push(cluster(20,-90,4,P.petal));
+    g.push(bud(22,-42,4));
+    g.push(`<circle cx="${rnd(5,30)}" cy="${rnd(-100,-30)}" r="1.3" fill="${P.gold}" opacity="0.7"/>`);
+    return `<g transform="${T}">${g.join('')}</g>`;
+  }
+  function centerSpray(cx,cy,flip=false){
+    const g=[];const T=`translate(${cx} ${cy}) ${flip?'scale(1 -1)':''}`;
+    g.push(`<g transform="scale(-1 1)">${curve([8,-16],[14,-38],[18,-52],1,0.5)}${leaf(10,-26,13,-20,P.sage,0.75)}${bud(16,-42,3.5)}</g>`);
+    g.push(`${curve([8,-16],[14,-38],[18,-52],1,0.5)}${leaf(10,-26,13,20,P.sage,0.75)}${bud(16,-42,3.5)}`);
+    g.push(daisy(0,-12,5,P.cream,0.85));
+    g.push(`<circle cx="0" cy="-2" r="1.6" fill="${P.gold}" opacity="0.8"/>`);
+    return `<g transform="${T}">${g.join('')}</g>`;
+  }
+  function buildFrame(svg,M=26,W=560,H=780){
+    let F='';
+    F+=cornerWreath(M,M,1,1,1.0)+cornerWreath(W-M,M,-1,1,1.0)+cornerWreath(M,H-M,1,-1,1.0)+cornerWreath(W-M,H-M,-1,-1,1.0);
+    F+=sideAccent(M-2,300,1,0.8,10)+sideAccent(W-M+2,300,-1,0.8,-10);
+    F+=sideAccent(M-2,480,1,0.7,-6)+sideAccent(W-M+2,480,-1,0.7,6);
+    F+=centerSpray(W/2,M-8)+centerSpray(W/2,H-M+8,true);
+    F+=`<rect x="20" y="20" width="${W-40}" height="${H-40}" fill="none" stroke="${P.accent}" stroke-width="0.6" opacity="0.25" rx="4"/>`;
+    F+=`<rect x="27" y="27" width="${W-54}" height="${H-54}" fill="none" stroke="${P.gold}" stroke-width="0.4" opacity="0.35" rx="3"/>`;
+    F+=`<rect x="33" y="33" width="${W-66}" height="${H-66}" fill="none" stroke="${P.accent}" stroke-width="0.3" opacity="0.16" rx="2"/>`;
+    [[M,M,1,1],[W-M,M,-1,1],[M,H-M,1,-1],[W-M,H-M,-1,-1]].forEach(([x,y,dx,dy])=>{
+      F+=`<g transform="translate(${x} ${y}) scale(${dx} ${dy})"><path d="M0 0 L 26 0 M0 0 L 0 26" stroke="${P.gold}" stroke-width="0.8" opacity="0.6"/><circle cx="0" cy="0" r="2" fill="${P.gold}" opacity="0.7"/></g>`;
+    });
+    svg.innerHTML=F;
+    svg.classList.add('fade');
+  }
+  document.querySelectorAll('.card .frame').forEach(s=>buildFrame(s));
+  (function(){const e=document.querySelector('.env-deco');let F='';F+=cornerWreath(24,24,1,1,0.7)+cornerWreath(416,24,-1,1,0.7);F+=`<rect x="18" y="18" width="404" height="324" fill="none" stroke="${P.accent}" stroke-width="0.5" opacity="0.25" rx="4"/>`;e.innerHTML=F;})();
+
+  /* ============================================================
+     SPARKLES on cards
+     ============================================================ */
+  document.querySelectorAll('.card').forEach(card=>{
+    for(let i=0;i<12;i++){
+      const s=document.createElement('div');s.className='sparkle';
+      s.style.left=rnd(8,92)+'%';s.style.top=rnd(8,92)+'%';
+      s.style.animationDelay=(rnd(0,2.4))+'s';s.style.transform=`scale(${rnd(.5,1.2)})`;
+      s.classList.add('live');card.appendChild(s);
+    }
+  });
+
+  /* ============================================================
+     THREE.JS SCENE - layered 3D watercolor environment
+     Layers (back to front):
+       - Soft glow sphere
+       - Distant orbs (watercolor bokeh)
+       - Floating botanical petals (watercolor wash)
+       - Gold dust motes
+       - 3D bloom blossoms (low-poly with lighting)
+     Parallax via device orientation + pointer
+     ============================================================ */
+  const sceneEl=document.getElementById('scene');
+  const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});
+  renderer.setPixelRatio(Math.min(2,window.devicePixelRatio));
+  renderer.setSize(window.innerWidth,window.innerHeight);
+  sceneEl.appendChild(renderer.domElement);
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(45,window.innerWidth/window.innerHeight,0.1,100);
+  camera.position.set(0,0,18);
+  scene.fog=new THREE.Fog(0xdfe6ea,16,42);
+
+  scene.add(new THREE.AmbientLight(0xffffff,1.0));
+  const dirL=new THREE.DirectionalLight(0xc0d0d8,0.7);dirL.position.set(5,8,6);scene.add(dirL);
+  const dirL2=new THREE.DirectionalLight(0xe0d0c8,0.35);dirL2.position.set(-6,-4,4);scene.add(dirL2);
+  const pLight=new THREE.PointLight(0xb8a890,0.4,30);pLight.position.set(0,2,4);scene.add(pLight);
+
+  // Watercolor petal texture - soft elliptical bloom with feathered edges
+  function makePetalTexture(color){
+    const c=document.createElement('canvas');c.width=128;c.height=128;
+    const ctx=c.getContext('2d');
+    const g=ctx.createRadialGradient(64,64,2,64,64,60);
+    g.addColorStop(0,color);g.addColorStop(.55,color+'cc');g.addColorStop(1,'rgba(255,255,255,0)');
+    ctx.fillStyle=g;ctx.beginPath();ctx.ellipse(64,64,46,26,0,0,Math.PI*2);ctx.fill();
+    return new THREE.CanvasTexture(c);
+  }
+  function makeDotTexture(color){
+    const c=document.createElement('canvas');c.width=64;c.height=64;
+    const ctx=c.getContext('2d');
+    const g=ctx.createRadialGradient(32,32,1,32,32,30);
+    g.addColorStop(0,color);g.addColorStop(1,'rgba(255,255,255,0)');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(32,32,28,0,Math.PI*2);ctx.fill();
+    return new THREE.CanvasTexture(c);
+  }
+  function makeBloomTexture(color,centerColor){
+    const c=document.createElement('canvas');c.width=128;c.height=128;
+    const ctx=c.getContext('2d');
+    for(let k=0;k<6;k++){
+      const a=(k/6)*Math.PI*2;const px=64+Math.cos(a)*22,py=64+Math.sin(a)*22;
+      const g=ctx.createRadialGradient(px,py,1,px,py,22);
+      g.addColorStop(0,color+'dd');g.addColorStop(1,'rgba(255,255,255,0)');
+      ctx.fillStyle=g;ctx.beginPath();ctx.ellipse(px,py,16,11,a,0,Math.PI*2);ctx.fill();
+    }
+    const gc=ctx.createRadialGradient(64,64,1,64,64,14);
+    gc.addColorStop(0,centerColor);gc.addColorStop(1,'rgba(255,255,255,0)');
+    ctx.fillStyle=gc;ctx.beginPath();ctx.arc(64,64,14,0,Math.PI*2);ctx.fill();
+    return new THREE.CanvasTexture(c);
+  }
+
+  const petalColors=[P.petal,P.leaf,P.cream,P.sage,P.mauve,P.bud];
+  const petalMats=petalColors.map(c=>new THREE.MeshBasicMaterial({map:makePetalTexture(c),transparent:true,opacity:0.82,side:THREE.DoubleSide,depthWrite:false}));
+  const petals=[];
+  const PETAL_COUNT=window.innerWidth<600?70:100;
+  for(let i=0;i<PETAL_COUNT;i++){
+    const m=new THREE.Mesh(new THREE.PlaneGeometry(0.9,0.58),petalMats[i%petalMats.length]);
+    m.position.set((Math.random()-.5)*28,(Math.random()-.5)*22,(Math.random()-.5)*10-3);
+    m.rotation.set(Math.random()*Math.PI,Math.random()*Math.PI,Math.random()*Math.PI);
+    m.userData={sp:0.004+Math.random()*0.012,rs:(Math.random()-.5)*0.012,float:Math.random()*Math.PI*2,amp:0.3+Math.random()*0.8,sway:Math.random()*Math.PI*2,layer:Math.random()};
+    scene.add(m);petals.push(m);
+  }
+
+  const dustTex=makeDotTexture(P.gold);
+  const dust=[];
+  const DUST_COUNT=window.innerWidth<600?40:60;
+  for(let i=0;i<DUST_COUNT;i++){
+    const m=new THREE.Mesh(new THREE.PlaneGeometry(0.14,0.14),new THREE.MeshBasicMaterial({map:dustTex,transparent:true,opacity:0.75,depthWrite:false}));
+    m.position.set((Math.random()-.5)*24,(Math.random()-.5)*20,(Math.random()-.5)*7-1);
+    m.userData={sp:0.003+Math.random()*0.007,float:Math.random()*Math.PI*2,amp:0.2+Math.random()*0.6};
+    scene.add(m);dust.push(m);
+  }
+
+  // Soft background glow sphere
+  const glow=new THREE.Mesh(new THREE.SphereGeometry(11,32,32),new THREE.MeshBasicMaterial({color:0xeef2f4,transparent:true,opacity:0.3,depthWrite:false}));
+  glow.position.set(0,0,-6);scene.add(glow);
+
+  // Distant watercolor orbs (bokeh depth)
+  const orbColors=[0xc0d0d8,0xc8d0e0,0xe0d0c8,0xb8b8c0];
+  const orbs=[];
+  for(let i=0;i<6;i++){
+    const m=new THREE.Mesh(new THREE.SphereGeometry(rnd(0.6,1.4),24,24),new THREE.MeshBasicMaterial({color:orbColors[i%orbColors.length],transparent:true,opacity:0.18,depthWrite:false}));
+    m.position.set((Math.random()-.5)*18,(Math.random()-.5)*12,(Math.random()-.5)*8-4);
+    m.userData={sp:0.001+Math.random()*0.003,float:Math.random()*Math.PI*2,amp:0.4+Math.random()*0.8};
+    scene.add(m);orbs.push(m);
+  }
+
+  // 3D bloom blossoms - lit low-poly icosahedron "flowers" that drift + spin
+  const bloomMats=[
+    new THREE.MeshStandardMaterial({color:0xc0d0d8,transparent:true,opacity:0.55,flatShading:true,roughness:0.6,metalness:0.05,depthWrite:false}),
+    new THREE.MeshStandardMaterial({color:0xe0d0c8,transparent:true,opacity:0.5,flatShading:true,roughness:0.6,metalness:0.05,depthWrite:false}),
+    new THREE.MeshStandardMaterial({color:0xc8d0e0,transparent:true,opacity:0.5,flatShading:true,roughness:0.6,metalness:0.05,depthWrite:false}),
+    new THREE.MeshStandardMaterial({color:0xb8b8c0,transparent:true,opacity:0.45,flatShading:true,roughness:0.6,metalness:0.05,depthWrite:false}),
+  ];
+  const blooms=[];
+  const BLOOM_COUNT=window.innerWidth<600?5:8;
+  for(let i=0;i<BLOOM_COUNT;i++){
+    const r=rnd(0.4,0.85);
+    const m=new THREE.Mesh(new THREE.IcosahedronGeometry(r,0),bloomMats[i%bloomMats.length]);
+    m.position.set((Math.random()-.5)*20,(Math.random()-.5)*14,(Math.random()-.5)*6-2);
+    m.userData={sp:0.0015+Math.random()*0.003,float:Math.random()*Math.PI*2,amp:0.4+Math.random()*0.9,rot:rnd(0.002,0.006),layer:Math.random()};
+    scene.add(m);blooms.push(m);
+  }
+
+  /* ============================================================
+     DECK SIZING (mobile-first)
+     ============================================================ */
+  const deck=document.getElementById('deck');
+  const RATIO=5/7;
+  function sizeDeck(){
+    const pad=24;
+    const availW=window.innerWidth-pad;
+    const availH=window.innerHeight-pad*2-60;
+    let w=availW,h=w/RATIO;
+    if(h>availH){h=availH;w=h*RATIO;}
+    const maxW=560;
+    if(w>maxW){w=maxW;h=w/RATIO;}
+    deck.style.width=w+'px';deck.style.height=h+'px';
+  }
+  sizeDeck();
+
+  /* ============================================================
+     CARD NAVIGATION
+     ============================================================ */
+  const cards=[...document.querySelectorAll('.card')];
+  const dots=[...document.querySelectorAll('#nav .dot')];
+  const prevBtn=document.getElementById('nav-prev');
+  const nextBtn=document.getElementById('nav-next');
+  let current=0;
+  function showCard(i,dir=1){
+    if(i<0||i>=cards.length||i===current)return;
+    const out=cards[current];out.classList.remove('enter');
+    out.classList.add(dir>0?'exit-left':'exit-right');
+    setTimeout(()=>{out.classList.remove('exit-left','exit-right','enter');out.classList.add('hidden');},470);
+    const inc=cards[i];inc.classList.remove('hidden','exit-left','exit-right');
+    inc.classList.remove('enter');void inc.offsetWidth;inc.classList.add('enter');
+    current=i;dots.forEach((d,k)=>d.classList.toggle('active',k===i));
+    prevBtn.classList.toggle('hidden',i===0);
+    nextBtn.classList.toggle('hidden',i===cards.length-1);
+  }
+  dots.forEach((d,k)=>d.addEventListener('click',()=>showCard(k,k>current?1:-1)));
+  prevBtn.addEventListener('click',()=>showCard(current-1,-1));
+  nextBtn.addEventListener('click',()=>showCard(current+1,1));
+
+  /* ============================================================
+     3D TILT + SWIPE + DEVICE ORIENTATION PARALLAX
+     ============================================================ */
+  let targetRX=4,targetRY=0,rotX=4,rotY=0;
+  let dragging=false,lastX=0,lastY=0,dragRX=0,dragRY=0,swipeStartX=0,swipeStartY=0,swipeT=0;
+  let orientRX=0,orientRY=0;
+
+  function onMove(cx,cy){if(dragging)return;const wX=window.innerWidth/2,wY=window.innerHeight/2;const dx=(cx-wX)/wX,dy=(cy-wY)/wY;targetRY=dx*15;targetRX=4-dy*11;}
+  window.addEventListener('mousemove',e=>onMove(e.clientX,e.clientY));
+  window.addEventListener('touchmove',e=>{if(e.touches[0]&&e.touches.length===1)onMove(e.touches[0].clientX,e.touches[0].clientY);},{passive:true});
+
+  // Device orientation parallax (mobile)
+  function onOrient(e){
+    if(e.beta==null||e.gamma==null)return;
+    const gamma=Math.max(-45,Math.min(45,e.gamma));
+    const beta=Math.max(-45,Math.min(45,e.beta));
+    orientRY=gamma/45*12;
+    orientRX=Math.max(-30,Math.min(30,(beta-45)))/45*10;
+  }
+  if(window.DeviceOrientationEvent){
+    window.addEventListener('deviceorientation',onOrient,false);
+    if(typeof DeviceOrientationEvent.requestPermission==='function'){
+      // iOS 13+ - request on first user gesture (envelope open will trigger)
+    }
+  }
+
+  function pStart(x,y){dragging=true;lastX=x;lastY=y;swipeStartX=x;swipeStartY=y;swipeT=performance.now();}
+  function pMove(x,y){if(!dragging)return;dragRY+=(x-lastX)*0.34;dragRX-=(y-lastY)*0.34;dragRX=Math.max(-55,Math.min(55,dragRX));lastX=x;lastY=y;}
+  function pEnd(x,y){if(!dragging)return;dragging=false;const dx=x-swipeStartX,dy=y-swipeStartY;const dt=performance.now()-swipeT;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.4&&dt<700){showCard(current+(dx<0?1:-1),dx<0?1:-1);}}
+  deck.addEventListener('pointerdown',e=>{e.preventDefault();pStart(e.clientX,e.clientY);try{deck.setPointerCapture(e.pointerId);}catch(_){}});
+  deck.addEventListener('pointermove',e=>pMove(e.clientX,e.clientY));
+  deck.addEventListener('pointerup',e=>pEnd(e.clientX,e.clientY));
+  deck.addEventListener('pointercancel',e=>pEnd(e.clientX,e.clientY));
+
+  // Keyboard nav
+  window.addEventListener('keydown',e=>{
+    if(e.key==='ArrowLeft')showCard(current-1,-1);
+    else if(e.key==='ArrowRight')showCard(current+1,1);
+    else if(e.key==='Escape'){rsvp.classList.remove('show');}
+  });
+
+  // Parallax state for 3D scene
+  let parX=0,parY=0,tParX=0,tParY=0;
+
+  function animate(){
+    if(!dragging){dragRX+=(0-dragRX)*0.05;dragRY+=(0-dragRY)*0.05;}
+    // Blend pointer target + device orientation
+    const gx=targetRX+dragRX+orientRX;
+    const gy=targetRY+dragRY+orientRY;
+    rotX+=(gx-rotX)*0.1;rotY+=(gy-rotY)*0.1;
+    deck.style.transform=`rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+
+    // Scene parallax (camera + objects) based on tilt
+    tParX=gy*0.04;tParY=-gx*0.04;
+    parX+=(tParX-parX)*0.05;parY+=(tParY-parY)*0.05;
+    camera.position.x=parX*2.5;camera.position.y=parY*2.5;
+    camera.lookAt(0,0,0);
+
+    petals.forEach(p=>{p.position.y+=p.userData.sp;p.rotation.z+=p.userData.rs;p.userData.float+=0.02;p.userData.sway+=0.01;p.position.x+=Math.sin(p.userData.float)*0.002*p.userData.amp+Math.sin(p.userData.sway)*0.001;if(p.position.y>12){p.position.y=-12;p.position.x=(Math.random()-.5)*28;}p.rotation.y+=Math.sin(p.userData.float)*0.002;});
+    dust.forEach(p=>{p.position.y+=p.userData.sp;p.userData.float+=0.03;p.position.x+=Math.sin(p.userData.float)*0.003*p.userData.amp;if(p.position.y>11){p.position.y=-11;p.position.x=(Math.random()-.5)*24;}});
+    orbs.forEach(o=>{o.userData.float+=0.005;o.position.y+=Math.sin(o.userData.float)*0.002*o.userData.amp;o.position.x+=Math.cos(o.userData.float*0.7)*0.0015*o.userData.amp;o.rotation.y+=0.002;o.position.x+=parX*0.4*o.userData.amp;o.position.y+=parY*0.4*o.userData.amp;});
+    blooms.forEach(b=>{b.userData.float+=0.006;b.position.y+=Math.sin(b.userData.float)*0.003*b.userData.amp;b.position.x+=Math.cos(b.userData.float*0.7)*0.002*b.userData.amp;b.rotation.x+=b.userData.rot;b.rotation.y+=b.userData.rot*0.7;b.position.x+=parX*0.6*b.userData.amp;b.position.y+=parY*0.6*b.userData.amp;});
+    glow.rotation.y+=0.0012;
+    pLight.position.x=Math.sin(performance.now()*0.0008)*4;
+    pLight.position.y=2+Math.cos(performance.now()*0.0006)*2;
+
+    renderer.render(scene,camera);requestAnimationFrame(animate);
+  }
+  onMove(window.innerWidth/2,window.innerHeight/2);
+  animate();
+
+  window.addEventListener('resize',()=>{
+    camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth,window.innerHeight);sizeDeck();
+  });
+
+  /* ============================================================
+     ENVELOPE OPENING
+     ============================================================ */
+  const env=document.getElementById('envelope'),seal=document.getElementById('seal');let opened=false;
+  function openInvite(){
+    if(opened)return;opened=true;
+    // iOS permission request for device orientation
+    if(typeof DeviceOrientationEvent!=='undefined'&&typeof DeviceOrientationEvent.requestPermission==='function'){
+      DeviceOrientationEvent.requestPermission().then(s=>{if(s==='granted')window.addEventListener('deviceorientation',onOrient);}).catch(()=>{});
+    }
+    env.classList.add('open');setTimeout(()=>env.classList.add('hide'),700);startMusic();
+  }
+  seal.addEventListener('click',openInvite);
+  env.addEventListener('click',e=>{if(e.target===env)openInvite();});
+
+  /* ============================================================
+     COUNTDOWN (with pulse animation on second change)
+     ============================================================ */
+  const target=new Date('2026-08-09T20:00:00+03:00').getTime();
+  const elD=document.getElementById('cd-d'),elH=document.getElementById('cd-h'),elM=document.getElementById('cd-m'),elS=document.getElementById('cd-s');
+  const pad=n=>n<10?'0'+n:''+n;
+  let lastSec=-1;
+  function tick(){
+    let diff=target-Date.now();if(diff<0)diff=0;
+    const s=Math.floor((diff%60000)/1000);
+    elD.textContent=Math.floor(diff/86400000);
+    elH.textContent=pad(Math.floor((diff%86400000)/3600000));
+    elM.textContent=pad(Math.floor((diff%3600000)/60000));
+    elS.textContent=pad(s);
+    if(s!==lastSec){elS.classList.remove('pulse');void elS.offsetWidth;elS.classList.add('pulse');lastSec=s;}
+  }
+  tick();setInterval(tick,1000);
+
+  /* ============================================================
+     RSVP MODAL + TOAST
+     ============================================================ */
+  const rsvp=document.getElementById('rsvp');
+  const toast=document.getElementById('toast');
+  function showToast(msg){toast.textContent=msg;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),3200);}
+  document.getElementById('rsvp-open').addEventListener('click',()=>rsvp.classList.add('show'));
+  document.getElementById('rsvp-close').addEventListener('click',()=>rsvp.classList.remove('show'));
+  rsvp.addEventListener('click',e=>{if(e.target===rsvp)rsvp.classList.remove('show');});
+  let rsvpVal='yes';
+  document.querySelectorAll('#rsvp .opt').forEach(o=>o.addEventListener('click',()=>{document.querySelectorAll('#rsvp .opt').forEach(b=>b.classList.remove('sel'));o.classList.add('sel');rsvpVal=o.dataset.v;}));
+  document.getElementById('rsvp-submit').addEventListener('click',()=>{
+    const name=document.getElementById('rsvp-name').value.trim()||'Guest';
+    rsvp.classList.remove('show');
+    showToast(`Thank you, ${name}! ${rsvpVal==='yes'?'We look forward to celebrating with you.':'We will miss you.'}`);
+  });
+
+  /* ============================================================
+     MUSIC — CALM, PEACEFUL JOY
+     Major key (C major), slow & serene. Soft sustained pads,
+     gentle harp-like arpeggios, warm sine bass pulses, sparse
+     crystalline bell melody, airy chimes. Spacious reverb.
+     ============================================================ */
+  let audioCtx=null,masterGain=null,musicOn=false,musicBus=null,musicDelay=null,musicWet=null;
+  const musicBtn=document.getElementById('music');
+
+  const note=(root,semi)=>root*Math.pow(2,semi/12);
+  const A4=440,C3=130.81,G2=98.0,C2=65.41,C5=523.25;
+
+  // Serene progression in C: C - G - Am - F (I-V-vi-IV) — peaceful at slow tempo
+  const PROG=[
+    [0,4,7,12,16],   // C  (C E G C E)
+    [7,11,14,19,23], // G  (G B D G B)
+    [9,12,16,21,24], // Am (A C E A C)
+    [5,9,12,17,21],  // F  (F A C F A)
+  ];
+  // Gentle pentatonic melody — single octave, higher & softer
+  const MEL=[0,4,7,9,12,16,19];
+  // Soft harp-like arpeggio patterns per chord (slow, ascending only)
+  const ARP=[
+    [0,7,12,16,19],
+    [7,14,19,23,26],
+    [9,16,21,24,28],
+    [5,12,17,21,24],
+  ];
+
+  function startMusic(){
+    if(audioCtx){if(!musicOn)toggleMusic();return;}
+    audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    masterGain=audioCtx.createGain();masterGain.gain.value=0.0001;masterGain.connect(audioCtx.destination);
+    // Warm low-pass for a soft, rounded tone
+    const lp=audioCtx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=3800;lp.Q.value=0.4;
+    lp.connect(masterGain);
+    // Spacious reverb-like delay — long, feedback-heavy for airy tail
+    const delay=audioCtx.createDelay();delay.delayTime.value=0.5;
+    const fb=audioCtx.createGain();fb.gain.value=0.46;
+    const wet=audioCtx.createGain();wet.gain.value=0.34;
+    delay.connect(fb);fb.connect(delay);delay.connect(wet);wet.connect(lp);
+    musicDelay=delay;musicWet=wet;musicBus=lp;
+    musicOn=true;musicBtn.classList.add('playing');
+    masterGain.gain.exponentialRampToValueAtTime(0.16,audioCtx.currentTime+3);
+    scheduleChords();scheduleMelody();scheduleBass();scheduleShimmer();scheduleArp();
+  }
+
+  // Soft sustained pad — slow swell, long hold, gentle sine+triangle blend
+  function padVoice(freq,time,dur,vol=0.04,type='triangle'){
+    const o=audioCtx.createOscillator();const g=audioCtx.createGain();
+    o.type=type;o.frequency.value=freq;
+    const atk=Math.min(dur*0.35,2.5); // slow, breathing attack
+    g.gain.setValueAtTime(0.0001,time);
+    g.gain.linearRampToValueAtTime(vol,time+atk);
+    g.gain.setValueAtTime(vol,Math.max(time+atk,time+dur-2));
+    g.gain.exponentialRampToValueAtTime(0.0001,time+dur);
+    o.connect(g);g.connect(musicBus);
+    o.start(time);o.stop(time+dur+0.2);
+    // soft octave-above sine layer for warmth (not brightness)
+    const o2=audioCtx.createOscillator();const g2=audioCtx.createGain();
+    o2.type='sine';o2.frequency.value=freq*2;
+    g2.gain.setValueAtTime(0.0001,time);g2.gain.linearRampToValueAtTime(vol*0.28,time+atk);
+    g2.gain.exponentialRampToValueAtTime(0.0001,time+dur);
+    o2.connect(g2);g2.connect(musicBus);
+    o2.start(time);o2.stop(time+dur+0.2);
+  }
+
+  // Crystalline bell — soft, long decay, airy
+  function bell(freq,time,vol=0.07,dur=3.6){
+    const o=audioCtx.createOscillator();const g=audioCtx.createGain();
+    o.type='sine';o.frequency.value=freq;
+    g.gain.setValueAtTime(0.0001,time);
+    g.gain.exponentialRampToValueAtTime(vol,time+0.06); // softer attack
+    g.gain.exponentialRampToValueAtTime(0.0001,time+dur);
+    o.connect(g);g.connect(musicBus);g.connect(musicDelay);
+    o.start(time);o.stop(time+dur+0.2);
+    // gentle fifth above, very soft
+    const o2=audioCtx.createOscillator();const g2=audioCtx.createGain();
+    o2.type='sine';o2.frequency.value=freq*1.5;
+    g2.gain.setValueAtTime(0.0001,time+0.04);
+    g2.gain.exponentialRampToValueAtTime(vol*0.3,time+0.08);
+    g2.gain.exponentialRampToValueAtTime(0.0001,time+dur*0.85);
+    o2.connect(g2);g2.connect(musicBus);
+    o2.start(time+0.04);o2.stop(time+dur);
+  }
+
+  // Warm soft bass pulse — slow, round, sustains gently (not plucky)
+  function softBass(freq,time,vol=0.1,dur=1.6){
+    const o=audioCtx.createOscillator();const g=audioCtx.createGain();
+    o.type='sine';o.frequency.value=freq;
+    const atk=0.12;
+    g.gain.setValueAtTime(0.0001,time);
+    g.gain.linearRampToValueAtTime(vol,time+atk);
+    g.gain.setValueAtTime(vol,time+dur*0.5);
+    g.gain.exponentialRampToValueAtTime(0.0001,time+dur);
+    const f=audioCtx.createBiquadFilter();f.type='lowpass';f.frequency.value=420;
+    o.connect(f);f.connect(g);g.connect(musicBus);
+    o.start(time);o.stop(time+dur+0.1);
+  }
+
+  // Gentle harp-like arpeggio voice — soft sine pluck, slow decay
+  function arpVoice(freq,time,vol=0.045,dur=1.4){
+    const o=audioCtx.createOscillator();const g=audioCtx.createGain();
+    o.type='sine';o.frequency.value=freq;
+    g.gain.setValueAtTime(0.0001,time);
+    g.gain.exponentialRampToValueAtTime(vol,time+0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001,time+dur);
+    const f=audioCtx.createBiquadFilter();f.type='lowpass';f.frequency.value=2200;f.Q.value=0.6;
+    o.connect(f);f.connect(g);g.connect(musicBus);g.connect(musicDelay);
+    o.start(time);o.stop(time+dur+0.1);
+  }
+
+  // Airy soft chime — gentle high sine, very quiet, for occasional sparkle
+  function shimmerTick(time,vol=0.025){
+    const o=audioCtx.createOscillator();const g=audioCtx.createGain();
+    o.type='sine';o.frequency.value=1800+rnd(0,400);
+    g.gain.setValueAtTime(0.0001,time);
+    g.gain.exponentialRampToValueAtTime(vol,time+0.04);
+    g.gain.exponentialRampToValueAtTime(0.0001,time+1.4);
+    o.connect(g);g.connect(musicDelay);
+    o.start(time);o.stop(time+1.5);
+  }
+
+  let chordIdx=0;
+  function scheduleChords(){
+    if(!musicOn)return;
+    const t=audioCtx.currentTime+0.1;
+    const chord=PROG[chordIdx%PROG.length];
+    const dur=9; // slow, sustained chord changes
+    chord.forEach(s=>padVoice(note(C3,s),t,dur,0.035,'triangle'));
+    chordIdx++;
+    setTimeout(scheduleChords,(dur-1.5)*1000);
+  }
+  function scheduleMelody(){
+    if(!musicOn)return;
+    const t=audioCtx.currentTime+0.2;
+    const n1=MEL[Math.floor(Math.random()*MEL.length)];
+    bell(note(C5,n1),t,0.07,3.6);
+    if(Math.random()<0.45){
+      const n2=MEL[Math.floor(Math.random()*MEL.length)];
+      bell(note(C5,n2),t+rnd(1.4,2.2),0.055,3);
+    }
+    // slow, spacious timing — long pauses between phrases
+    setTimeout(scheduleMelody,rnd(3400,5200));
+  }
+  // Gentle slow bass: root, then fifth, long sustains (no bouncy octave)
+  function scheduleBass(){
+    if(!musicOn)return;
+    const chord=PROG[chordIdx%PROG.length];
+    const rootSemi=chord[0]-12;
+    const t=audioCtx.currentTime+0.1;
+    const beat=1.6; // very slow, breathing pulse
+    softBass(note(C2,rootSemi),t,0.1,1.8);
+    softBass(note(C2,rootSemi+7),t+beat,0.08,1.6);
+    setTimeout(scheduleBass,beat*2*1000);
+  }
+  // Gentle harp roll — ascending chord tones, slow & soft
+  function scheduleArp(){
+    if(!musicOn)return;
+    const arp=ARP[chordIdx%ARP.length];
+    const t=audioCtx.currentTime+0.3;
+    const step=0.42; // slow, dreamy
+    arp.forEach((s,i)=>{
+      arpVoice(note(C3,s),t+i*step,0.04,1.6);
+    });
+    setTimeout(scheduleArp,arp.length*step*1000+2200);
+  }
+  function scheduleShimmer(){
+    if(!musicOn)return;
+    const t=audioCtx.currentTime+0.1;
+    if(Math.random()<0.35)shimmerTick(t,0.022);
+    setTimeout(scheduleShimmer,rnd(2600,4800));
+  }
+  function toggleMusic(){
+    if(!audioCtx)return;musicOn=!musicOn;
+    if(musicOn){masterGain.gain.exponentialRampToValueAtTime(0.16,audioCtx.currentTime+1.8);musicBtn.classList.add('playing');scheduleChords();scheduleMelody();scheduleBass();scheduleShimmer();scheduleArp();}
+    else{masterGain.gain.exponentialRampToValueAtTime(0.0001,audioCtx.currentTime+1);musicBtn.classList.remove('playing');}
+  }
+  musicBtn.addEventListener('click',()=>{if(!audioCtx)startMusic();else toggleMusic();});
+
+  /* ============================================================
+     LOADER
+     ============================================================ */
+  const loader=document.getElementById('loader');
+  const loaderBar=document.getElementById('loader-bar');
+  let lp=0;
+  const li=setInterval(()=>{lp=Math.min(100,lp+Math.random()*18+8);loaderBar.style.width=lp+'%';if(lp>=100){clearInterval(li);setTimeout(()=>{loader.classList.add('hide');},300);}},140);
+  // Safety: hide loader after 3s no matter what
+  setTimeout(()=>{loader.classList.add('hide');},3500);
+  </script>
+</body>
+</html>
