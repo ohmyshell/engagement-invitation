@@ -254,21 +254,32 @@
   }
   #rsvp.show{opacity:1;pointer-events:auto;}
   #rsvp .modal{
-    width:min(420px,92vw);background:linear-gradient(160deg,#fbf7f0,#f4ecdf);
+    width:min(420px,92vw);overflow:hidden;
     border-radius:22px;padding:34px 26px 26px;text-align:center;position:relative;
     box-shadow:var(--shadow-card);color:var(--ink);
     transform:translateY(24px) scale(.96);transition:transform .4s cubic-bezier(.2,.8,.2,1);
-    max-height:90vh;overflow-y:auto;
+    max-height:90vh;
   }
   #rsvp.show .modal{transform:none;}
-  #rsvp .modal::before{content:"";position:absolute;inset:7px;border:1px solid rgba(194,168,120,.4);border-radius:16px;pointer-events:none;}
+  #rsvp .modal::before{content:"";position:absolute;inset:7px;border:1px solid rgba(194,168,120,.4);border-radius:16px;pointer-events:none;z-index:3;}
+  #rsvp .modal::after{content:"";position:absolute;inset:11px;border:1px solid rgba(122,138,168,.22);border-radius:13px;pointer-events:none;z-index:3;}
+  #rsvp .modal .modal-bg{
+    position:absolute;inset:0;z-index:0;
+    background-image:var(--bg-url);background-size:cover;background-position:center;
+    will-change:transform;animation:cardpan 26s ease-in-out infinite alternate;
+  }
+  #rsvp .modal .modal-veil{
+    position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(160deg,rgba(251,247,240,0) 0%,rgba(244,236,223,.8) 45%,rgba(251,247,240,.96) 100%);
+  }
+  #rsvp .modal .modal-scroll{position:relative;z-index:2;max-height:90vh;overflow-y:auto;padding:inherit;}
   #rsvp h3{font-family:var(--script);font-size:42px;color:var(--navy);margin-bottom:4px;line-height:1;}
   #rsvp .modal p{font-size:15px;color:var(--teal);font-style:italic;margin-bottom:22px;}
   #rsvp .field{margin-bottom:16px;text-align:left;}
   #rsvp label{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;font-weight:600;}
   #rsvp input,#rsvp select,#rsvp textarea{
     width:100%;padding:14px 16px;border:1px solid rgba(122,138,168,.4);border-radius:12px;
-    font-family:var(--serif);font-size:17px;color:var(--navy);background:rgba(255,255,255,.7);
+    font-family:var(--serif);font-size:17px;color:var(--navy);background:rgba(255,255,255,.85);
   }
   #rsvp input:focus,#rsvp select:focus,#rsvp textarea:focus{outline:2px solid var(--gold);border-color:var(--gold);}
   #rsvp textarea{resize:vertical;min-height:70px;}
@@ -276,7 +287,7 @@
   #rsvp .opt{
     flex:1;padding:16px;border:1px solid rgba(122,138,168,.4);border-radius:14px;
     font-family:var(--sans);font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
-    color:var(--teal);cursor:pointer;background:rgba(255,255,255,.6);transition:all .2s;
+    color:var(--teal);cursor:pointer;background:rgba(255,255,255,.85);transition:all .2s;
   }
   #rsvp .opt.sel{background:var(--navy);color:#fff;border-color:var(--navy);}
   #rsvp .submit{
@@ -286,7 +297,7 @@
     box-shadow:0 14px 32px -10px rgba(42,52,80,.65);
   }
   #rsvp .submit:active{transform:scale(.98);}
-  #rsvp .close{position:absolute;top:12px;right:16px;width:40px;height:40px;border-radius:50%;border:none;background:rgba(122,138,168,.16);font-size:24px;color:var(--accent);cursor:pointer;line-height:1;}
+  #rsvp .close{position:absolute;top:12px;right:16px;width:40px;height:40px;border-radius:50%;border:none;background:rgba(122,138,168,.16);font-size:24px;color:var(--accent);cursor:pointer;line-height:1;z-index:4;}
 
   /* ---------- Toast ---------- */
   #toast{
@@ -410,21 +421,25 @@
 
   <div id="rsvp">
     <div class="modal">
-      <button class="close" id="rsvp-close" aria-label="Close">&times;</button>
-      <h3>Kindly Reply</h3>
-      <p>we'd love to celebrate with you</p>
-      <div class="field"><label for="rsvp-name">full name</label><input id="rsvp-name" type="text" placeholder="Your name" autocomplete="name" /></div>
-      <div class="field"><label for="rsvp-count">number of guests</label>
-        <select id="rsvp-count"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
-      </div>
-      <div class="field"><label>will you attend?</label>
-        <div class="opts">
-          <button class="opt sel" data-v="yes" type="button">Will attend</button>
-          <button class="opt" data-v="no" type="button">Unable</button>
+      <div class="modal-bg"></div>
+      <div class="modal-veil"></div>
+      <div class="modal-scroll">
+        <button class="close" id="rsvp-close" aria-label="Close">&times;</button>
+        <h3>Kindly Reply</h3>
+        <p>we'd love to celebrate with you</p>
+        <div class="field"><label for="rsvp-name">full name</label><input id="rsvp-name" type="text" placeholder="Your name" autocomplete="name" /></div>
+        <div class="field"><label for="rsvp-count">number of guests</label>
+          <select id="rsvp-count"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
         </div>
+        <div class="field"><label>will you attend?</label>
+          <div class="opts">
+            <button class="opt sel" data-v="yes" type="button">Will attend</button>
+            <button class="opt" data-v="no" type="button">Unable</button>
+          </div>
+        </div>
+        <div class="field"><label for="rsvp-msg">message (optional)</label><textarea id="rsvp-msg" placeholder="A note for the couple"></textarea></div>
+        <button class="submit" id="rsvp-submit">Send Reply</button>
       </div>
-      <div class="field"><label for="rsvp-msg">message (optional)</label><textarea id="rsvp-msg" placeholder="A note for the couple"></textarea></div>
-      <button class="submit" id="rsvp-submit">Send Reply</button>
     </div>
   </div>
 
