@@ -56,17 +56,16 @@
     position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden;
   }
   #glow span{
-    position:absolute;border-radius:50%;filter:blur(60px);opacity:.5;
-    mix-blend-mode:screen;
+    position:absolute;border-radius:50%;opacity:.6;
   }
   #glow span:nth-child(1){width:60vw;height:60vw;left:-20vw;top:-15vw;
-    background:radial-gradient(circle,rgba(232,220,196,.45),transparent 65%);
+    background:radial-gradient(circle,rgba(232,220,196,.4),transparent 70%);
     animation:float1 18s ease-in-out infinite;}
   #glow span:nth-child(2){width:55vw;height:55vw;right:-18vw;top:30vh;
-    background:radial-gradient(circle,rgba(192,208,216,.4),transparent 65%);
+    background:radial-gradient(circle,rgba(192,208,216,.35),transparent 70%);
     animation:float2 22s ease-in-out infinite;}
   #glow span:nth-child(3){width:65vw;height:65vw;left:-15vw;bottom:-20vw;
-    background:radial-gradient(circle,rgba(184,168,144,.38),transparent 65%);
+    background:radial-gradient(circle,rgba(184,168,144,.33),transparent 70%);
     animation:float3 26s ease-in-out infinite;}
   @keyframes float1{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(6vw,4vw) scale(1.08);}}
   @keyframes float2{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-5vw,-3vw) scale(1.12);}}
@@ -114,7 +113,6 @@
     background:
       radial-gradient(circle at 22% 18%,rgba(255,255,255,.5),transparent 42%),
       radial-gradient(circle at 82% 88%,rgba(194,168,120,.14),transparent 46%);
-    mix-blend-mode:screen;
   }
   .panel > *:not(.panel-bg):not(.panel-veil){position:relative;z-index:2;}
 
@@ -201,113 +199,7 @@
   .quote::before,.quote::after{content:'"';color:var(--gold);}
 
   /* ---------- RSVP ---------- */
-  .rsvp-btn{
-    width:100%;max-width:320px;margin:14px auto 0;display:block;
-    padding:18px;border-radius:999px;border:none;cursor:pointer;
-    background:linear-gradient(135deg,var(--navy),#3a4660);
-    color:#fff;font-family:var(--sans);font-weight:600;
-    font-size:15px;letter-spacing:.26em;text-transform:uppercase;
-    box-shadow:0 14px 32px -10px rgba(42,52,80,.65), inset 0 1px 0 rgba(255,255,255,.2);
-    transition:transform .2s, box-shadow .2s;
-  }
-  .rsvp-btn:active{transform:scale(.97);box-shadow:0 8px 22px -10px rgba(42,52,80,.65);}
   .rsvp-note{margin-top:14px;font-style:italic;font-size:15px;color:var(--teal);}
-  .rsvp-hero{max-width:280px;margin:24px auto 0;padding:16px 38px;}
-
-  /* ---------- Music toggle ---------- */
-  #music{
-    position:fixed;top:calc(14px + env(safe-area-inset-top));right:14px;z-index:60;
-    width:52px;height:52px;border-radius:50%;border:1px solid rgba(236,220,192,.5);
-    background:rgba(26,33,52,.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-    cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--gold-bright);
-    transition:transform .3s, background .3s;box-shadow:0 6px 20px -6px rgba(0,0,0,.5);
-  }
-  #music:active{transform:scale(.92);}
-  #music svg{width:22px;height:22px;}
-  #music .eq{display:none;align-items:flex-end;height:20px;}
-  #music.playing .eq{display:flex;}
-  #music.playing .icon{display:none;}
-  #music .eq span{display:block;width:3.5px;height:20px;margin:0 2px;background:var(--gold-bright);transform-origin:bottom;animation:eq .9s infinite ease-in-out;border-radius:2px;}
-  #music .eq span:nth-child(2){animation-delay:.15s;}
-  #music .eq span:nth-child(3){animation-delay:.3s;}
-  #music .eq span:nth-child(4){animation-delay:.08s;}
-  @keyframes eq{0%,100%{transform:scaleY(.25)}50%{transform:scaleY(1)}}
-
-  /* Music label for first-time users / elderly guests */
-  #music-label{
-    position:fixed;top:calc(14px + env(safe-area-inset-top));right:74px;z-index:60;
-    height:52px;display:flex;align-items:center;
-    background:rgba(26,33,52,.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-    border:1px solid rgba(236,220,192,.4);border-radius:999px;padding:0 16px 0 14px;
-    color:var(--gold-bright);font-family:var(--sans);font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
-    box-shadow:0 6px 20px -6px rgba(0,0,0,.5);
-    opacity:0;transform:translateX(8px);pointer-events:none;
-    transition:opacity .5s, transform .5s;
-  }
-  #music-label.show{opacity:1;transform:translateX(0);}
-
-  /* ---------- RSVP modal ---------- */
-  #rsvp{
-    position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;
-    background:rgba(26,33,52,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-    opacity:0;pointer-events:none;transition:opacity .35s;padding:20px;
-  }
-  #rsvp.show{opacity:1;pointer-events:auto;}
-  #rsvp .modal{
-    width:min(420px,92vw);overflow:hidden;
-    border-radius:22px;padding:34px 26px 26px;text-align:center;position:relative;
-    box-shadow:var(--shadow-card);color:var(--ink);
-    transform:translateY(24px) scale(.96);transition:transform .4s cubic-bezier(.2,.8,.2,1);
-    max-height:90vh;
-  }
-  #rsvp.show .modal{transform:none;}
-  #rsvp .modal::before{content:"";position:absolute;inset:7px;border:1px solid rgba(194,168,120,.4);border-radius:16px;pointer-events:none;z-index:3;}
-  #rsvp .modal::after{content:"";position:absolute;inset:11px;border:1px solid rgba(122,138,168,.22);border-radius:13px;pointer-events:none;z-index:3;}
-  #rsvp .modal .modal-bg{
-    position:absolute;inset:0;z-index:0;
-    background-image:var(--bg-url);background-size:cover;background-position:center;
-    will-change:transform;animation:cardpan 26s ease-in-out infinite alternate;
-  }
-  #rsvp .modal .modal-veil{
-    position:absolute;inset:0;z-index:1;pointer-events:none;
-    background:linear-gradient(160deg,rgba(251,247,240,0) 0%,rgba(244,236,223,.8) 45%,rgba(251,247,240,.96) 100%);
-  }
-  #rsvp .modal .modal-scroll{position:relative;z-index:2;max-height:90vh;overflow-y:auto;padding:inherit;}
-  #rsvp h3{font-family:var(--script);font-size:42px;color:var(--navy);margin-bottom:4px;line-height:1;}
-  #rsvp .modal p{font-size:15px;color:var(--teal);font-style:italic;margin-bottom:22px;}
-  #rsvp .field{margin-bottom:16px;text-align:left;}
-  #rsvp label{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;font-weight:600;}
-  #rsvp input,#rsvp select,#rsvp textarea{
-    width:100%;padding:14px 16px;border:1px solid rgba(122,138,168,.4);border-radius:12px;
-    font-family:var(--serif);font-size:17px;color:var(--navy);background:rgba(255,255,255,.85);
-  }
-  #rsvp input:focus,#rsvp select:focus,#rsvp textarea:focus{outline:2px solid var(--gold);border-color:var(--gold);}
-  #rsvp textarea{resize:vertical;min-height:70px;}
-  #rsvp .opts{display:flex;gap:12px;margin:18px 0;}
-  #rsvp .opt{
-    flex:1;padding:16px;border:1px solid rgba(122,138,168,.4);border-radius:14px;
-    font-family:var(--sans);font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
-    color:var(--teal);cursor:pointer;background:rgba(255,255,255,.85);transition:all .2s;
-  }
-  #rsvp .opt.sel{background:var(--navy);color:#fff;border-color:var(--navy);}
-  #rsvp .submit{
-    width:100%;padding:18px;border-radius:999px;border:none;cursor:pointer;
-    background:linear-gradient(135deg,var(--navy),#3a4660);color:#fff;
-    font-family:var(--sans);font-weight:600;font-size:14px;letter-spacing:.26em;text-transform:uppercase;
-    box-shadow:0 14px 32px -10px rgba(42,52,80,.65);
-  }
-  #rsvp .submit:active{transform:scale(.98);}
-  #rsvp .close{position:absolute;top:12px;right:16px;width:40px;height:40px;border-radius:50%;border:none;background:rgba(122,138,168,.16);font-size:24px;color:var(--accent);cursor:pointer;line-height:1;z-index:4;}
-
-  /* ---------- Toast ---------- */
-  #toast{
-    position:fixed;top:calc(80px + env(safe-area-inset-top));left:50%;transform:translateX(-50%) translateY(-24px);
-    z-index:90;background:rgba(26,33,52,.94);color:var(--gold-bright);padding:16px 26px;border-radius:16px;
-    font-family:var(--sans);font-size:14px;letter-spacing:.06em;font-weight:500;
-    box-shadow:0 14px 36px -10px rgba(0,0,0,.5);opacity:0;pointer-events:none;
-    transition:opacity .4s, transform .4s cubic-bezier(.2,.8,.2,1);max-width:90vw;text-align:center;
-  }
-  #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
   /* ---------- Footer ---------- */
   footer{width:100%;max-width:480px;margin:8px auto 0;text-align:center;padding:10px 20px;}
@@ -335,12 +227,6 @@
   <div id="glow"><span></span><span></span><span></span></div>
   <div id="petals"></div>
 
-  <button id="music" title="Toggle music" aria-label="Toggle music">
-    <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
-    <div class="eq"><span></span><span></span><span></span><span></span></div>
-  </button>
-  <div id="music-label">Tap for music</div>
-
   <main>
     <section id="hero" class="reveal">
       <div class="tiny smallcaps">together with their families</div>
@@ -354,8 +240,7 @@
       <div class="panel-veil"><div class="glow"></div></div>
       <div class="card-head">kindly reply</div>
       <div class="card-sub">we'd love to celebrate with you</div>
-      <button class="rsvp-btn" id="rsvp-open">RSVP Now</button>
-      <div class="rsvp-note">Please let us know by 1 August 2026</div>
+      <div class="rsvp-note">Please reply with your confirmation by 1 August 2026</div>
     </section>
 
     <section class="panel reveal">
@@ -418,32 +303,6 @@
       <div class="tiny">Layal &amp; Mohamad · 9 · 8 · 2026 · Beirut</div>
     </footer>
   </main>
-
-  <div id="rsvp">
-    <div class="modal">
-      <div class="modal-bg"></div>
-      <div class="modal-veil"></div>
-      <div class="modal-scroll">
-        <button class="close" id="rsvp-close" aria-label="Close">&times;</button>
-        <h3>Kindly Reply</h3>
-        <p>we'd love to celebrate with you</p>
-        <div class="field"><label for="rsvp-name">full name</label><input id="rsvp-name" type="text" placeholder="Your name" autocomplete="name" /></div>
-        <div class="field"><label for="rsvp-count">number of guests</label>
-          <select id="rsvp-count"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
-        </div>
-        <div class="field"><label>will you attend?</label>
-          <div class="opts">
-            <button class="opt sel" data-v="yes" type="button">Will attend</button>
-            <button class="opt" data-v="no" type="button">Unable</button>
-          </div>
-        </div>
-        <div class="field"><label for="rsvp-msg">message (optional)</label><textarea id="rsvp-msg" placeholder="A note for the couple"></textarea></div>
-        <button class="submit" id="rsvp-submit">Send Reply</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="toast">Thank you! Your reply has been noted.</div>
 
   <script>
   /* ============================================================
@@ -541,171 +400,6 @@
     if(s!==lastSec){elS.classList.remove('pulse');void elS.offsetWidth;elS.classList.add('pulse');lastSec=s;}
   }
   tick();setInterval(tick,1000);
-
-  /* ============================================================
-     RSVP MODAL + TOAST
-     ============================================================ */
-  const rsvp=document.getElementById('rsvp');
-  const toast=document.getElementById('toast');
-  const STORE_KEY='layal_mohamad_rsvp';
-  function showToast(msg){toast.textContent=msg;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),3800);}
-  function openRsvp(){rsvp.classList.add('show');setTimeout(()=>document.getElementById('rsvp-name').focus(),250);}
-  document.getElementById('rsvp-open').addEventListener('click',openRsvp);
-  document.getElementById('rsvp-close').addEventListener('click',()=>rsvp.classList.remove('show'));
-  rsvp.addEventListener('click',e=>{if(e.target===rsvp)rsvp.classList.remove('show');});
-  let rsvpVal='yes';
-  document.querySelectorAll('#rsvp .opt').forEach(o=>o.addEventListener('click',()=>{
-    document.querySelectorAll('#rsvp .opt').forEach(b=>b.classList.remove('sel'));
-    o.classList.add('sel');rsvpVal=o.dataset.v;
-  }));
-  document.getElementById('rsvp-submit').addEventListener('click',()=>{
-    const name=document.getElementById('rsvp-name').value.trim();
-    if(!name){showToast('Please enter your name.');document.getElementById('rsvp-name').focus();return;}
-    const count=document.getElementById('rsvp-count').value;
-    const msg=document.getElementById('rsvp-msg').value.trim();
-    try{
-      const list=JSON.parse(localStorage.getItem(STORE_KEY)||'[]');
-      list.push({name,count,attending:rsvpVal,msg,date:new Date().toISOString()});
-      localStorage.setItem(STORE_KEY,JSON.stringify(list));
-    }catch(_){}
-    rsvp.classList.remove('show');
-    showToast(rsvpVal==='yes'
-      ?`Thank you, ${name}! We look forward to celebrating with you.`
-      :`Thank you, ${name}. We will miss you.`);
-  });
-
-  /* ============================================================
-     MUSIC — CALM, PEACEFUL JOY (Web Audio, procedural)
-     Major key (C major), slow & serene. Soft sustained pads,
-     gentle harp-like arpeggios, warm sine bass, sparse crystalline
-     bell melody, airy chimes. Spacious reverb.
-     ============================================================ */
-  let audioCtx=null,masterGain=null,musicOn=false,musicBus=null,musicDelay=null;
-  const musicBtn=document.getElementById('music');
-  const musicLabel=document.getElementById('music-label');
-
-  const note=(root,semi)=>root*Math.pow(2,semi/12);
-  const C3=130.81,G2=98.0,C2=65.41,C5=523.25;
-  const rnd=(a,b)=>a+Math.random()*(b-a);
-
-  const PROG=[
-    [0,4,7,12,16],
-    [7,11,14,19,23],
-    [9,12,16,21,24],
-    [5,9,12,17,21],
-  ];
-  const MEL=[0,4,7,9,12,16,19];
-  const ARP=[
-    [0,7,12,16,19],
-    [7,14,19,23,26],
-    [9,16,21,24,28],
-    [5,12,17,21,24],
-  ];
-
-  function startMusic(){
-    if(audioCtx){if(!musicOn)toggleMusic();return;}
-    audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-    masterGain=audioCtx.createGain();masterGain.gain.value=0.0001;masterGain.connect(audioCtx.destination);
-    const lp=audioCtx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=3800;lp.Q.value=0.4;lp.connect(masterGain);
-    const delay=audioCtx.createDelay();delay.delayTime.value=0.5;
-    const fb=audioCtx.createGain();fb.gain.value=0.46;
-    const wet=audioCtx.createGain();wet.gain.value=0.34;
-    delay.connect(fb);fb.connect(delay);delay.connect(wet);wet.connect(lp);
-    musicDelay=delay;musicBus=lp;
-    musicOn=true;musicBtn.classList.add('playing');
-    masterGain.gain.exponentialRampToValueAtTime(0.16,audioCtx.currentTime+3);
-    scheduleChords();scheduleMelody();scheduleBass();scheduleShimmer();scheduleArp();
-    hideLabel();
-  }
-  function padVoice(freq,time,dur,vol=0.04,type='triangle'){
-    const o=audioCtx.createOscillator();const g=audioCtx.createGain();
-    o.type=type;o.frequency.value=freq;
-    const atk=Math.min(dur*0.35,2.5);
-    g.gain.setValueAtTime(0.0001,time);
-    g.gain.linearRampToValueAtTime(vol,time+atk);
-    g.gain.setValueAtTime(vol,Math.max(time+atk,time+dur-2));
-    g.gain.exponentialRampToValueAtTime(0.0001,time+dur);
-    o.connect(g);g.connect(musicBus);o.start(time);o.stop(time+dur+0.2);
-    const o2=audioCtx.createOscillator();const g2=audioCtx.createGain();
-    o2.type='sine';o2.frequency.value=freq*2;
-    g2.gain.setValueAtTime(0.0001,time);g2.gain.linearRampToValueAtTime(vol*0.28,time+atk);
-    g2.gain.exponentialRampToValueAtTime(0.0001,time+dur);
-    o2.connect(g2);g2.connect(musicBus);o2.start(time);o2.stop(time+dur+0.2);
-  }
-  function bell(freq,time,vol=0.07,dur=3.6){
-    const o=audioCtx.createOscillator();const g=audioCtx.createGain();
-    o.type='sine';o.frequency.value=freq;
-    g.gain.setValueAtTime(0.0001,time);
-    g.gain.exponentialRampToValueAtTime(vol,time+0.06);
-    g.gain.exponentialRampToValueAtTime(0.0001,time+dur);
-    o.connect(g);g.connect(musicBus);g.connect(musicDelay);o.start(time);o.stop(time+dur+0.2);
-    const o2=audioCtx.createOscillator();const g2=audioCtx.createGain();
-    o2.type='sine';o2.frequency.value=freq*1.5;
-    g2.gain.setValueAtTime(0.0001,time+0.04);
-    g2.gain.exponentialRampToValueAtTime(vol*0.3,time+0.08);
-    g2.gain.exponentialRampToValueAtTime(0.0001,time+dur*0.85);
-    o2.connect(g2);g2.connect(musicBus);o2.start(time+0.04);o2.stop(time+dur);
-  }
-  function softBass(freq,time,vol=0.1,dur=1.6){
-    const o=audioCtx.createOscillator();const g=audioCtx.createGain();
-    o.type='sine';o.frequency.value=freq;
-    g.gain.setValueAtTime(0.0001,time);
-    g.gain.linearRampToValueAtTime(vol,time+0.12);
-    g.gain.setValueAtTime(vol,time+dur*0.5);
-    g.gain.exponentialRampToValueAtTime(0.0001,time+dur);
-    const f=audioCtx.createBiquadFilter();f.type='lowpass';f.frequency.value=420;
-    o.connect(f);f.connect(g);g.connect(musicBus);o.start(time);o.stop(time+dur+0.1);
-  }
-  function arpVoice(freq,time,vol=0.045,dur=1.4){
-    const o=audioCtx.createOscillator();const g=audioCtx.createGain();
-    o.type='sine';o.frequency.value=freq;
-    g.gain.setValueAtTime(0.0001,time);
-    g.gain.exponentialRampToValueAtTime(vol,time+0.02);
-    g.gain.exponentialRampToValueAtTime(0.0001,time+dur);
-    const f=audioCtx.createBiquadFilter();f.type='lowpass';f.frequency.value=2200;f.Q.value=0.6;
-    o.connect(f);f.connect(g);g.connect(musicBus);g.connect(musicDelay);o.start(time);o.stop(time+dur+0.1);
-  }
-  function shimmerTick(time,vol=0.025){
-    const o=audioCtx.createOscillator();const g=audioCtx.createGain();
-    o.type='sine';o.frequency.value=1800+rnd(0,400);
-    g.gain.setValueAtTime(0.0001,time);
-    g.gain.exponentialRampToValueAtTime(vol,time+0.04);
-    g.gain.exponentialRampToValueAtTime(0.0001,time+1.4);
-    o.connect(g);g.connect(musicDelay);o.start(time);o.stop(time+1.5);
-  }
-  let chordIdx=0;
-  function scheduleChords(){if(!musicOn)return;const t=audioCtx.currentTime+0.1;const chord=PROG[chordIdx%PROG.length];const dur=9;chord.forEach(s=>padVoice(note(C3,s),t,dur,0.035,'triangle'));chordIdx++;setTimeout(scheduleChords,(dur-1.5)*1000);}
-  function scheduleMelody(){if(!musicOn)return;const t=audioCtx.currentTime+0.2;const n1=MEL[Math.floor(Math.random()*MEL.length)];bell(note(C5,n1),t,0.07,3.6);if(Math.random()<0.45){const n2=MEL[Math.floor(Math.random()*MEL.length)];bell(note(C5,n2),t+rnd(1.4,2.2),0.055,3);}setTimeout(scheduleMelody,rnd(3400,5200));}
-  function scheduleBass(){if(!musicOn)return;const chord=PROG[chordIdx%PROG.length];const rootSemi=chord[0]-12;const t=audioCtx.currentTime+0.1;const beat=1.6;softBass(note(C2,rootSemi),t,0.1,1.8);softBass(note(C2,rootSemi+7),t+beat,0.08,1.6);setTimeout(scheduleBass,beat*2*1000);}
-  function scheduleArp(){if(!musicOn)return;const arp=ARP[chordIdx%ARP.length];const t=audioCtx.currentTime+0.3;const step=0.42;arp.forEach((s,i)=>{arpVoice(note(C3,s),t+i*step,0.04,1.6);});setTimeout(scheduleArp,arp.length*step*1000+2200);}
-  function scheduleShimmer(){if(!musicOn)return;const t=audioCtx.currentTime+0.1;if(Math.random()<0.35)shimmerTick(t,0.022);setTimeout(scheduleShimmer,rnd(2600,4800));}
-  function toggleMusic(){if(!audioCtx)return;musicOn=!musicOn;if(musicOn){masterGain.gain.exponentialRampToValueAtTime(0.16,audioCtx.currentTime+1.8);musicBtn.classList.add('playing');scheduleChords();scheduleMelody();scheduleBass();scheduleShimmer();scheduleArp();}else{masterGain.gain.exponentialRampToValueAtTime(0.0001,audioCtx.currentTime+1);musicBtn.classList.remove('playing');}}
-  musicBtn.addEventListener('click',()=>{if(!audioCtx)startMusic();else toggleMusic();});
-  function hideLabel(){musicLabel.classList.remove('show');}
-
-  /* Autoplay on load. Browsers block audio without a user gesture, so we
-     attempt to start now; if the AudioContext comes back suspended,
-     we resume + start on the very first interaction anywhere on the page. */
-  function tryAutoplay(){
-    if(!audioCtx){
-      startMusic();
-    } else if(audioCtx.state==='suspended'){
-      audioCtx.resume().then(()=>{if(!musicOn)toggleMusic();}).catch(()=>{});
-    } else if(!musicOn){
-      toggleMusic();
-    }
-  }
-  tryAutoplay();
-
-  function gestureStart(){
-    tryAutoplay();
-    document.body.removeEventListener('click',gestureStart);
-    document.body.removeEventListener('touchstart',gestureStart);
-    document.body.removeEventListener('pointerdown',gestureStart);
-  }
-  document.body.addEventListener('click',gestureStart,{once:false});
-  document.body.addEventListener('touchstart',gestureStart,{passive:true,once:false});
-  document.body.addEventListener('pointerdown',gestureStart,{once:false});
   </script>
 </body>
 </html>
