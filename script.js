@@ -94,4 +94,42 @@
     if(s!==lastSec){elS.classList.remove('pulse');void elS.offsetWidth;elS.classList.add('pulse');lastSec=s;}
   }
   tick();setInterval(tick,1000);
+
+  /* ============================================================
+     BACKGROUND MUSIC - autoplay on first gesture, mute toggle
+     ============================================================ */
+  const audio=document.getElementById('bg-music');
+  const musicToggle=document.getElementById('music-toggle');
+  audio.volume=0.45;
+
+  function startAudio(){
+    audio.play().then(()=>{
+      musicToggle.classList.remove('muted');
+    }).catch(()=>{
+      musicToggle.classList.add('muted');
+    });
+  }
+
+  // Browsers block autoplay without a user gesture.
+  // Attempt autoplay now; if blocked, start on first interaction.
+  startAudio();
+
+  function gestureStart(){
+    if(audio.paused){startAudio();}
+    document.body.removeEventListener('click',gestureStart);
+    document.body.removeEventListener('touchstart',gestureStart);
+    document.body.removeEventListener('pointerdown',gestureStart);
+  }
+  document.body.addEventListener('click',gestureStart,{once:false});
+  document.body.addEventListener('touchstart',gestureStart,{passive:true,once:false});
+  document.body.addEventListener('pointerdown',gestureStart,{once:false});
+
+  musicToggle.addEventListener('click',()=>{
+    if(audio.paused){
+      startAudio();
+    } else {
+      audio.pause();
+      musicToggle.classList.add('muted');
+    }
+  });
   

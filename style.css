@@ -206,3 +206,17 @@
     #hero{margin-top:24px;}
     #hero .names{font-size:96px;}
   }
+
+  /* ---------- Music toggle ---------- */
+  #music-toggle{
+    position:fixed;top:calc(14px + env(safe-area-inset-top));right:14px;z-index:60;
+    width:48px;height:48px;border-radius:50%;border:1px solid rgba(236,220,192,.5);
+    background:rgba(26,33,52,.7);
+    cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--gold-bright);
+    transition:transform .3s, background .3s;box-shadow:0 6px 20px -6px rgba(0,0,0,.5);
+  }
+  #music-toggle:active{transform:scale(.92);}
+  #music-toggle svg{width:22px;height:22px;}
+  #music-toggle .icon-off{display:none;}
+  #music-toggle.muted .icon-on{display:none;}
+  #music-toggle.muted .icon-off{display:block;}
